@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 
 class GameArtGrid extends Component {
   render() {
+    let game = this.props.game || {};
     return (
       <div className="game-art-grid">
-        {(this.props.images || []).map((image,i) => {
+        {(game.images || []).map((image,i) => {
           return (
-                  <img key={image} src={image+'&h=120'} />
+                  <img key={image} alt={`${game.id}-achievement-${i}`} src={image+'&h=120'} />
                  );
         })}
       </div>

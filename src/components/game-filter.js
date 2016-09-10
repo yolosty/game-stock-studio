@@ -9,7 +9,7 @@ class GameFilter extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedImages: props.images,
+      selectedGame: {},
       games: [
         { name: 'Destiny', id: 'destiny', images: destiny_images },
         { name: 'Rocket League', id: 'rocket-league', images: rocket_league_images }
@@ -19,9 +19,9 @@ class GameFilter extends Component {
 
   handleChange(event) {
     this.setState({
-      selectedImages: this.state.games.find((x) => {
+      selectedGame: this.state.games.find((x) => {
         return x.id === event.target.value;
-      } ).images
+      } )
     });
   }
 
@@ -39,7 +39,7 @@ class GameFilter extends Component {
                    );
           })}
         </select>
-        <GameArtGrid images={this.state.selectedImages}/>
+        <GameArtGrid game={this.state.selectedGame}/>
       </div>
     );
   }
