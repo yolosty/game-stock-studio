@@ -7,7 +7,7 @@ class StockBox extends Component {
     return (
       <div className="stock-box">
         This is a game-stock-box.
-        <GameFilter />
+        <GameFilter/>
       </div>
     );
   }
