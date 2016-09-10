@@ -20,7 +20,7 @@ class GameFilter extends Component {
   handleChange(event) {
     this.setState({
       selectedImages: this.state.games.find((x) => {
-        return x.id == event.target.value;
+        return x.id === event.target.value;
       } ).images
     });
   }
