@@ -50,8 +50,16 @@ class GameFilter extends Component {
 
   downloadStock(event) {
     let targetDevice = event.target.id;
+    let canvasArt = document.getElementById('art-canvas');
+
+    let canvasStock = document.getElementById('stock-canvas');
+    let contextStock = canvasStock.getContext("2d");
+    canvasStock.width = 200;
+    canvasStock.height = 350;
 
     if (targetDevice === 'iphone-dl') {
+      // void ctx.drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight);
+      contextStock.drawImage(canvasArt, 200, 0, 400, 700, 0, 0, 200, 350);
     } else if (targetDevice === 'android-dl') {
     }
   }
@@ -81,6 +89,7 @@ class GameFilter extends Component {
         <Modal isOpen={this.state.open} onAfterOpen={this.paintCanvas}>
           <h1>Achievement art</h1>
           <canvas id='art-canvas' />
+          <canvas id='stock-canvas' />
           <div>
             <button id='iphone-dl' onClick={this.downloadStock.bind(this)}>iPhone</button>
             <button id='android-dl' onClick={this.downloadStock.bind(this)}>Android</button>
