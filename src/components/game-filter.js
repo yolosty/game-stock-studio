@@ -61,6 +61,7 @@ class GameFilter extends Component {
       // void ctx.drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight);
       contextStock.drawImage(canvasArt, 200, 0, 400, 700, 0, 0, 200, 350);
     } else if (targetDevice === 'android-dl') {
+      this._renderSelection();
     }
   }
 
@@ -69,6 +70,63 @@ class GameFilter extends Component {
       selectedArt: img.substring(0,img.length - 6)
     });
     this.openModal();
+  }
+
+  _renderSelection() {
+    // scavaged from https://github.com/MattKetmo/darkroomjs/blob/master/lib/js/plugins/darkroom.crop.js#L59
+    let ctx = document.getElementById('art-canvas').getContext("2d");
+
+    // Overlay rendering
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
+    this._renderOverlay(ctx);
+  }
+
+  _renderOverlay(ctx) {
+    //
+    //    x0    x1        x2      x3
+    // y0 +------------------------+
+    //    |\\\\\\\\\\\\\\\\\\\\\\\\|
+    //    |\\\\\\\\\\\\\\\\\\\\\\\\|
+    // y1 +------+---------+-------+
+    //    |\\\\\\|         |\\\\\\\|
+    //    |\\\\\\|    0    |\\\\\\\|
+    //    |\\\\\\|         |\\\\\\\|
+    // y2 +------+---------+-------+
+    //    |\\\\\\\\\\\\\\\\\\\\\\\\|
+    //    |\\\\\\\\\\\\\\\\\\\\\\\\|
+    // y3 +------------------------+
+    //
+
+    let x0 = 0;
+    let x1 = 200;
+    let x2 = 600;
+    let x3 = 1280;
+
+    let y0 = 0;
+    let y1 = 0;
+    let y2 = 700;
+    let y3 = 720;
+
+    ctx.beginPath();
+
+    // Draw outer rectangle.
+    // Numbers are +/-1 so that overlay edges don't get blurry.
+    ctx.moveTo(x0 - 1, y0 - 1);
+    ctx.lineTo(x3 + 1, y0 - 1);
+    ctx.lineTo(x3 + 1, y3 + 1);
+    ctx.lineTo(x0 - 1, y3 - 1);
+    ctx.lineTo(x0 - 1, y0 - 1);
+    ctx.closePath();
+
+    // Draw inner rectangle.
+    ctx.moveTo(x1, y1);
+    ctx.lineTo(x1, y2);
+    ctx.lineTo(x2, y2);
+    ctx.lineTo(x2, y1);
+    ctx.lineTo(x1, y1);
+
+    ctx.closePath();
+    ctx.fill();
   }
 
   render() {
